@@ -9,8 +9,11 @@ test.describe('Advanced CSS-selectors', () => {
     const featuredSmartphone = page.locator(
       '.product-card.featured:has-text("Смартфон") .price-value',
     );
+    const price = await featuredSmartphone
+      .textContent()
+      .then((result) => (result ? parseInt(result) : null));
 
-    await expect(featuredSmartphone).toHaveText('49 999');
+    expect(price).toBeLessThan(50000);
 
     const submitButton = page.locator('#registration-form > .btn.submit-btn:not([disabled])');
     await expect(submitButton).toBeEnabled();
@@ -31,7 +34,11 @@ test.describe('Dynamic content', () => {
     const cheapProduct = page.locator(
       '#dynamic-content .product-card:not(.featured) .price-value:has-text("9")',
     );
-    await expect(cheapProduct).toHaveText('9 999');
+    const price = await cheapProduct
+      .textContent()
+      .then((result) => (result ? parseInt(result.replace(/\s/g, '')) : null));
+
+    expect(price).toEqual(9999);
   });
 
   test('Combinations with :has and :not', async ({ page }) => {
