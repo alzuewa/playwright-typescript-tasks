@@ -54,7 +54,7 @@ test.describe('Complicated cases of searching by text', () => {
   });
 
   test('Find text with multiple spaces', async ({ page }) => {
-    const spacedText = page.getByText(/Текст\s*с\s*множественными\s*пробелами/);
+    const spacedText = page.getByText(/Текст\s+с\s+множественными\s+пробелами/);
     await expect(spacedText).toBeVisible();
   });
 });
