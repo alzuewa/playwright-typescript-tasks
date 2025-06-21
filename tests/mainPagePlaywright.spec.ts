@@ -88,6 +88,9 @@ const elements: Elements[] = [
     },
   },
 ];
+
+const lightModes = ['light', 'dark'];
+
 test.describe('Main page tests', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('https://playwright.dev/');
@@ -121,9 +124,20 @@ test.describe('Main page tests', () => {
   });
 
   test('Test switching light mode', async ({ page }) => {
-    await page.getByRole('button', { name: 'Switch between dark and light' }).click();
+    await page
+      .getByRole('button', { name: 'Switch between dark and light' })
+      .click({ clickCount: 2 });
     await expect
       .soft(page.locator('html'))
-      .toHaveAttribute('data-theme', 'light', { timeout: 10000 });
+      .toHaveAttribute('data-theme', 'dark', { timeout: 10000 });
+  });
+
+  lightModes.forEach((value) => {
+    test(`Test style of active mode ${value}`, async ({ page }) => {
+      await page.evaluate((value) => {
+        document.querySelector('html')?.setAttribute('data-theme', value);
+      }, value);
+      await expect(page).toHaveScreenshot(`page with ${value}Mode.png`);
+    });
   });
 });
