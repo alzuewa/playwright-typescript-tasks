@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 
-test.describe('Тесты авторизации', () => {
+test.describe('Authorization tests', () => {
   let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
@@ -9,18 +9,18 @@ test.describe('Тесты авторизации', () => {
     await loginPage.navigate();
   });
 
-  test('Успешный вход', async () => {
+  test('Sucsessful login', async () => {
     await loginPage.login('admin', 'admin123');
     await expect(loginPage.page).toHaveURL(/products.html/);
   });
 
-  test('Неудачный вход с пустыми полями', async () => {
+  test('Unsuccessful login with empty fields', async () => {
     await loginPage.clickLogin();
     expect(await loginPage.isErrorMessageVisible()).toBeTruthy();
     expect(await loginPage.getErrorMessage()).toContain('Все поля обязательны');
   });
 
-  test('Неудачный вход с неверными данными', async () => {
+  test('Unsuccessful login with incorrect data', async () => {
     await loginPage.login('wrong', 'credentials');
     expect(await loginPage.isErrorMessageVisible()).toBeTruthy();
     expect(await loginPage.getErrorMessage()).toContain('Неверные учетные данные');

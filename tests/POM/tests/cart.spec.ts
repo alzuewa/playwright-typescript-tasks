@@ -3,7 +3,7 @@ import { LoginPage } from '../pages/loginPage';
 import { ProductsPage } from '../pages/productsPage';
 import { CartPage } from '../pages/cartPage';
 
-test.describe('Тесты корзины', () => {
+test.describe('Cart tests', () => {
   let cartPage: CartPage;
   let productsPage: ProductsPage;
 
@@ -20,18 +20,18 @@ test.describe('Тесты корзины', () => {
     await cartPage.navigate();
   });
 
-  test('Отображение добавленных товаров', async () => {
+  test('Displaying added items', async () => {
     await expect(cartPage.cartItems).toHaveCount(2);
     await expect(cartPage.cartTotal).toContainText('$1798');
   });
 
-  test('Удаление товара из корзины', async () => {
+  test('Delete item from cart', async () => {
     await cartPage.removeItem('Смартфон X');
     await expect(cartPage.cartItems).toHaveCount(1);
     await expect(cartPage.cartTotal).toContainText('$999');
   });
 
-  test('Возврат к списку продуктов', async () => {
+  test('Go back to products list', async () => {
     await cartPage.goBackToProducts();
     await expect(cartPage.page).toHaveURL(/products.html/);
   });
