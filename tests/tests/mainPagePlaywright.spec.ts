@@ -1,5 +1,5 @@
 import { test, expect, Locator, Page } from '@playwright/test';
-import { MainPage } from '../models/MainPage';
+import { MainPage } from '../pages/MainPage';
 
 let mainPage: MainPage;
 
