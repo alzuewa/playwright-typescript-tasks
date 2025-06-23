@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests/',
   snapshotPathTemplate: '{testDir}/screenshots/{testFilePath}/{arg}{ext}',
   expect: {
     toHaveScreenshot: {
@@ -36,6 +36,13 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'off',
+    proxy: process.env.CI
+      ? {
+          server: process.env.PROXY_IP!,
+          username: process.env.PROXY_USERNAME!,
+          password: process.env.PROXY_PASSWORD!,
+        }
+      : undefined,
   },
 
   /* Configure projects for major browsers */
@@ -43,6 +50,7 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testMatch: '**/*.spec.ts',
     },
 
     // {
