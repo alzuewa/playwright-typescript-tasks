@@ -20,16 +20,17 @@ test.describe('Tests with annotations for sections', () => {
     await expect(page.locator('#unstable-result')).toBeVisible();
   });
 
-  test.only('Test new feature in development', async ({ page }) => {
-    await page.goto('https://osstep.github.io/annotations');
+  // Comment this to run in CI
+  // test.only('Test new feature in development', async ({ page }) => {
+  //   await page.goto('https://osstep.github.io/annotations');
 
-    page.on('dialog', async (dialog) => {
-      expect(dialog.message()).toBe('Функция в разработке!');
-      await dialog.dismiss();
-    });
+  //   page.on('dialog', async (dialog) => {
+  //     expect(dialog.message()).toBe('Функция в разработке!');
+  //     await dialog.dismiss();
+  //   });
 
-    await page.getByRole('button', { name: 'Попробовать' }).click();
-  });
+  //   await page.getByRole('button', { name: 'Попробовать' }).click();
+  // });
 
   test.fail('Test with expected failure', async ({ page }) => {
     await page.goto('https://osstep.github.io/annotations');
