@@ -36,7 +36,7 @@ test.describe('Main page tests', () => {
       await mainPage.setDarkMode();
     });
     await test.step('Screenshot check with active dark mode', async () => {
-      await mainPage.checkLayoutWithDarktMode();
+      await mainPage.checkLayoutWithDarkMode();
     });
   });
 });
